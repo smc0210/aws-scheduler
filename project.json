@@ -1,0 +1,9 @@
+{
+    "name": "dev",
+    "description": "dev scheduler",
+    "memory": 512,
+    "timeout": 300,
+    "role": "arn:aws:iam::227292009533:role/aws-scheduler",
+    "nameTemplate": "{{.Project.Name}}-{{.Function.Name}}",
+    "environment": {}
+}
