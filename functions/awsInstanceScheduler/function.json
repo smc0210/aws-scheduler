@@ -7,6 +7,6 @@
     "environment": {
         "WEBHOOK_URL": "https://wh.jandi.com/connect-api/webhook/12018584/cd492a5c3e227119c36f24495daef76f",
         "STOP_ALERT_BEFORE_TIME_MINUTE": "10",
-        "OUTGOING_WEBHOOK_TOKEN": "1d64614d4bcb4f8c3239d217dd718c2c"
+        "OUTGOING_WEBHOOK_TOKEN": "da8cf2bddbc07a245d82227a13a51f47"
     }
 }
