@@ -2,7 +2,7 @@
     "type": "python3.6",
     "description": "Aws Instance Scheduler",
     "hooks":{
-        "build": "pip install -r requirements.txt -t python_modules"
+        "build": "pip3 install -r requirements.txt -t python_modules"
     },
     "environment": {
         "WEBHOOK_URL": "https://wh.jandi.com/connect-api/webhook/12018584/cd492a5c3e227119c36f24495daef76f",

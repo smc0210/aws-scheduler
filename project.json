@@ -1,4 +1,5 @@
 {
+    "profile": "default",
     "name": "dev",
     "description": "dev scheduler",
     "memory": 512,
