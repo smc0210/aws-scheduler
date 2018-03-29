@@ -976,7 +976,7 @@ class BotCommandSyntaxError(BotError):
             JandiWebhook.build_connect_info(str(self), self.description)
 
         return SchedulerBot.build_http_response(
-            JandiWebhook.build_message('잘 못들었습니다?', JandiWebhook.color_err, [connect_info]))
+            JandiWebhook.build_message('문법오류~', JandiWebhook.color_err, [connect_info]))
 
 
 class SchedulerBot:
@@ -994,7 +994,7 @@ class SchedulerBot:
     def run(self):
         try:
             if not self.is_valid_token():
-                return self.wrong_response('손들어 움직이면 쏜다!')
+                return self.wrong_response('Token 값이 틀렸습니다.!')
 
             command_result = self.command()
 
@@ -1035,7 +1035,7 @@ class SchedulerBot:
 
         # schedule 유효성 체크
         if not self.schedule.get_schedule():
-            raise BotInvalidError('**{0}** 은 저희 부대 스케쥴이 아닌거 같지 말입니다'.format(schedule_name), self)
+            raise BotInvalidError('**{0}** 은 현재 스케쥴과 다릅니다.'.format(schedule_name), self)
 
         command = args[1]
 
@@ -1070,7 +1070,7 @@ class SchedulerBot:
 
         connect_info = JandiWebhook.build_connect_info("명령 커멘드", '\n'.join(help_command_list))
 
-        return JandiWebhook.build_message('충성!', JandiWebhook.color_ok, [connect_info])
+        return JandiWebhook.build_message('접수!', JandiWebhook.color_ok, [connect_info])
 
     def status(self):
 
@@ -1082,7 +1082,7 @@ class SchedulerBot:
             info = self.get_server_status_connect_info_list()
 
         return JandiWebhook.build_message(
-            '보고 합니다! 현재 서버 상태는 총 : **{0}**, 작업 : **{1}**, 열외 : **{2}** 이상!'.format(
+            '현재 서버 상태는 총 : **{0}**, 가동중 : **{1}**, 예외 : **{2}** 총!'.format(
                 info['on'] + info['off'], info['on'], info['off']),
             JandiWebhook.color_ok, info['connect_info_list'])
 
@@ -1247,14 +1247,14 @@ class SchedulerBot:
         date = '오늘' if dt is None else dt
 
         if len(exception_list) == 0:
-            return '**{0}** 근무시간 변경이 없습니다'.format(date)
+            return '**{0}** 가동시간 변경이 없습니다'.format(date)
 
         desc_list = []
 
         for exception in exception_list:
             desc_list.append('**{0}** 시간을 **{1}**으로 변경'.format(exception['ExceptionType'], exception['ExceptionValue']))
 
-        return JandiWebhook.build_message('**{0}** 근무시간 변경표 입니다'.format(date), JandiWebhook.color_ok,
+        return JandiWebhook.build_message('**{0}** 가동시간 변경표 입니다'.format(date), JandiWebhook.color_ok,
                                           [JandiWebhook.build_connect_info('변경표', '\n'.join(desc_list))])
 
     def exception_set(self, args):
@@ -1266,7 +1266,7 @@ class SchedulerBot:
         exception_time = args[2]
 
         if not ScheduleUtil.is_valid_date(exception_date):
-            raise BotInvalidError('날짜가 잘못되었지 말입니다', self)
+            raise BotInvalidError('날짜에러~', self)
 
         exception_date = datetime.strptime(exception_date, '%Y-%m-%d').date()
 
@@ -1274,7 +1274,7 @@ class SchedulerBot:
 
         if exception_time != "None":
             if not ScheduleUtil.is_valid_time(exception_time):
-                raise BotInvalidError('시간이 잘못되었지 말입니다', self)
+                raise BotInvalidError('시간에러~', self)
             h = int(exception_time.split(':')[0])
 
         self.schedule.set_schedule_exception(exception_date, exception_type, exception_time)
@@ -1282,7 +1282,7 @@ class SchedulerBot:
         result = []
 
         if h > 20:
-            result.append("야간 근무 하십니까? 고생하시지 말입니다!")
+            result.append("야근중..........+2시간 이면 집 도착!")
 
         result.append('**{0}** 일 **{1}** 스케쥴 **{2}** 시간은 **{3}** 으로 설정되었습니다'.format(
             exception_date,
@@ -1301,7 +1301,7 @@ class SchedulerBot:
         exception_type = args[1]
 
         if not ScheduleUtil.is_valid_date(exception_date):
-            raise BotInvalidError('날짜가 잘못되었지 말입니다', self)
+            raise BotInvalidError('날짜가 잘못되었습니다.', self)
 
         exception_date = datetime.strptime(exception_date, '%Y-%m-%d').date()
 
@@ -1315,7 +1315,7 @@ class SchedulerBot:
 
         self.schedule.set_schedule_force_start(True)
 
-        return '진돗개 하나 발령! 현 시간부로 모든 서버들은 기상한다!'
+        return '모든 서버 시작 준비!'
 
     def force_stop(self):
 
@@ -1323,7 +1323,7 @@ class SchedulerBot:
 
         self.schedule.stop(True)
 
-        return '취침소등 하겠습니다!'
+        return '모든 서버 중지 대기'
 
     @staticmethod
     def build_http_response(res=None):
@@ -1340,7 +1340,7 @@ class SchedulerBot:
 
     def not_handle_err_response(self, exception, error_stack):
         connect_info = JandiWebhook.build_connect_info(str(exception), error_stack)
-        return self.build_http_response(JandiWebhook.build_message('검열한번 하셔야 할거 같지 말입니다',
+        return self.build_http_response(JandiWebhook.build_message('웹훅 에러입니다 웹훅 점검이 필요합니다.',
                                                                    JandiWebhook.color_err, [connect_info]))
 
 
