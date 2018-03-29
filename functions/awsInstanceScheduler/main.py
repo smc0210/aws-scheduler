@@ -1082,7 +1082,7 @@ class SchedulerBot:
             info = self.get_server_status_connect_info_list()
 
         return JandiWebhook.build_message(
-            '현재 서버 상태는 총 : **{0}**, 가동중 : **{1}**, 예외 : **{2}** 총!'.format(
+            '현재 서버 상태는 총 : **{0}**, 가동중 : **{1}**, 예외 : **{2}** 입니다'.format(
                 info['on'] + info['off'], info['on'], info['off']),
             JandiWebhook.color_ok, info['connect_info_list'])
 
