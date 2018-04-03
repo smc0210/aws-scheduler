@@ -976,7 +976,7 @@ class BotCommandSyntaxError(BotError):
             JandiWebhook.build_connect_info(str(self), self.description)
 
         return SchedulerBot.build_http_response(
-            JandiWebhook.build_message('문법오류~', JandiWebhook.color_err, [connect_info]))
+            JandiWebhook.build_message('문법오류 입니다. 다시 입력해주세요', JandiWebhook.color_err, [connect_info]))
 
 
 class SchedulerBot:
@@ -1070,7 +1070,7 @@ class SchedulerBot:
 
         connect_info = JandiWebhook.build_connect_info("명령 커멘드", '\n'.join(help_command_list))
 
-        return JandiWebhook.build_message('접수!', JandiWebhook.color_ok, [connect_info])
+        return JandiWebhook.build_message('도움말 안내입니다.!', JandiWebhook.color_ok, [connect_info])
 
     def status(self):
 
